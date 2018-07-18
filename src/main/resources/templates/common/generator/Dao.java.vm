@@ -1,0 +1,60 @@
+package ${package}.dao;
+
+import ${package}.domain.${className}DO;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+/**
+ * ${comments}
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+@Mapper
+public interface ${className}Dao {
+
+    /**
+     * 根据主键id获取对象
+     * @return
+     */
+    ${className}DO get(${pk.attrType} ${pk.attrname});
+
+    /**
+     * 根据条件获取对象集合
+     * @return
+     */
+    List<${className}DO> list(Map<String,Object> map);
+
+    /**
+     * 根据条件获取对象集合 的 数量
+     * @return
+     */
+    int count(Map<String,Object> map);
+
+    /**
+     * 保存
+     * @return
+     */
+    int save(${className}DO ${classname});
+
+    /**
+     * 修改
+     * @return
+     */
+    int update(${className}DO ${classname});
+
+    /**
+     * 根据主键移除
+     * @return
+     */
+    int remove(${pk.attrType} ${pk.attrname});
+
+    /**
+     * 根据主键 批量移除
+     * @return
+     */
+    int batchRemove(${pk.attrType}[] ${pk.attrname}s);
+}

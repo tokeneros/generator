@@ -1,0 +1,124 @@
+package ${package}.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import ${package}.domain.${className}DO;
+import ${package}.service.${className}Service;
+import com.example.eros.common.utils.PageUtils;
+import com.example.eros.common.utils.Query;
+import com.example.eros.common.utils.R;
+
+/**
+ * ${comments}
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+
+@Controller
+@RequestMapping("/${pathName}/${classname}")
+public class ${className}Controller{
+
+    @Autowired
+    private ${className}Service ${classname}Service;
+
+    //返回路径前缀
+    private String prefix = "${pathName}/${classname}";
+
+    @GetMapping()
+    String ${className}(){
+        return prefix + "/${classname}";
+    }
+
+    /**
+     * 返回列表
+     * @param params 查询参数
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/list")
+    public PageUtils list(@RequestParam Map<String, Object> params){
+        Query query = new Query(params);
+        List<${className}DO> ${classname}List = ${classname}Service.list(query);
+        int total = ${classname}Service.count(query);
+        PageUtils pageUtils = new PageUtils(${classname}List, total);
+        return pageUtils;
+    }
+
+    /**
+     * 跳转添加页面
+     * @return
+     */
+    @GetMapping("/add")
+    public String add(){
+        return prefix + "/add";
+    }
+
+    /**
+     * 1.通过主键查寻数据
+     * 2.跳转并展示修改页面
+     * @param model
+     * @return
+     */
+    @GetMapping("/edit/{${pk.attrname}}")
+    public String edit(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}, Model model){
+        ${className}DO ${classname} = ${classname}Service.get(${pk.attrname});
+        model.addAttribute("${classname}", ${classname});
+        return prefix + "/edit";
+    }
+
+    /**
+     * 保存
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/save")
+    public R save(${className}DO ${classname}){
+        if (${classname}Service.save(${classname})>0) {
+            return R.ok();
+        }
+        return R.error();
+    }
+
+    /**
+     * 修改
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/update")
+    public R update(${className}DO ${classname}){
+        ${classname}Service.update(${classname});
+        return R.ok();
+    }
+
+    /**
+     * 删除
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/remove")
+    public R remove(${pk.attrType} ${pk.attrname}){
+        if(${classname}Service.remove(${pk.attrname}) > 0){
+            return R.ok();
+        }
+        return R.error();
+    }
+
+    /**
+     * 批量删除
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/batchRemove")
+    public R batchRemove(@RequestParam("ids")${pk.attrType}[] ${pk.attrname}s){
+        ${classname}Service.batchRemove(${pk.attrname}s);
+        return R.ok();
+    }
+
+}

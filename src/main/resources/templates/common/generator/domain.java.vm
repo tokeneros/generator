@@ -1,0 +1,29 @@
+package ${package}.domain;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * ${comments}
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+public class ${className}DO implements Serializable {
+
+#foreach($column in $columns)
+    //${column.comments}
+    private ${column.attrType} ${column.attrname};
+#end
+
+#foreach($column in $columns)
+
+    public void set${column.attrName} (${column.attrType} ${column.attrname}){
+        this.${column.attrname} = ${column.attrname};
+    }
+
+    public ${column.attrType} get${column.attrName} (){
+        return ${column.attrname};
+    }
+#end
+}
